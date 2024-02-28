@@ -4,6 +4,7 @@ import headerImg from "../assets/img/header-img.svg";
 import { ArrowRightCircle } from 'react-bootstrap-icons';
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
+const warpColor=['#0acdaf','#4f85d4','#4fd477','#d4a84f','#c44fd4','#d44f84']
 
 export const Banner = () => {
   const [loopNum, setLoopNum] = useState(0);
@@ -13,14 +14,20 @@ export const Banner = () => {
   const [index, setIndex] = useState(1);
   const toRotate = [ "Web Developer", "Web Designer", "UI/UX Designer" ];
   const period = 2000;
+  const [col,setcolor]= useState('white')
+  const styl={
+    'color':col
+  }
 
   useEffect(() => {
     let ticker = setInterval(() => {
       tick();
     }, delta);
-
+    let ran = Math.floor(Math.random()*warpColor.length)
+    setcolor(warpColor[ran])
     return () => { clearInterval(ticker) };
   }, [text])
+
 
   const tick = () => {
     let i = loopNum % toRotate.length;
@@ -56,7 +63,7 @@ export const Banner = () => {
               {({ isVisible }) =>
               <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                 <span className="tagline">Welcome to my Portfolio</span>
-                <h1>{`Hi! I'm Dibya`} <span className="txt-rotate" data-rotate='[ "Web Developer", "Web Designer", "UI/UX Designer" ]'><span className="wrap">{text}</span></span></h1>
+                <h1>{`Hi! I'm Dibya`} <span className="txt-rotate" data-rotate='[ "Web Developer", "Web Designer", "UI/UX Designer" ]'><span className="wrap" style={styl}>{text}</span></span></h1>
                   <p>Driven developer with a passion for innovation and a commitment to building impactful applications. My journey began with a simple project, igniting a spark for creation that has fueled my continuous learning ever since. I am adept at exploring and mastering various technologies and frameworks, transforming ideas into tangible realities.</p>
                   <button onClick={() => console.log('connect')}>Let’s Connect <ArrowRightCircle size={25} /></button>
               </div>}
